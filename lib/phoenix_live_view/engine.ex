@@ -722,8 +722,9 @@ defmodule Phoenix.LiveView.Engine do
     to_safe(ast, line, extra_clauses)
   end
 
-  defp line_from_expr({_, meta, _}) when is_list(meta), do: Keyword.get(meta, :line)
-  defp line_from_expr(_), do: nil
+  # https://github.com/phoenixframework/phoenix_live_view/commit/1983eed4b0c639e67943c05df5940bf6e44341b9
+  defp line_from_expr({_, meta, _}) when is_list(meta), do: Keyword.get(meta, :line, 0)
+  defp line_from_expr(_), do: 0
 
   # We can do the work at compile time
   defp to_safe(literal, _line, _extra_clauses)
