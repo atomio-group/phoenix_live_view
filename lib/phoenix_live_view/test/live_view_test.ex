@@ -421,12 +421,20 @@ defmodule Phoenix.LiveViewTest do
   defmacro render_component(component, assigns, opts \\ []) do
     endpoint = Module.get_attribute(__CALLER__.module, :endpoint)
 
-    quote do
-      component = unquote(component)
+    component =
+      if is_atom(component) do
+        quote do
+          unquote(component).__live__()
+          unquote(component)
+        end
+      else
+        component
+      end
 
+    quote do
       Phoenix.LiveViewTest.__render_component__(
         unquote(endpoint),
-        if(is_atom(component), do: component.__live__(), else: component),
+        unquote(component),
         unquote(assigns),
         unquote(opts)
       )
