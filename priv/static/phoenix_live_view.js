@@ -696,6 +696,7 @@ removing illegal node: "${(childNode.outerHTML || childNode.nodeValue).trim()}"
       return {
         last_modified: this.file.lastModified,
         name: this.file.name,
+        relative_path: this.file.webkitRelativePath,
         size: this.file.size,
         type: this.file.type,
         ref: this.ref
@@ -751,6 +752,7 @@ removing illegal node: "${(childNode.outerHTML || childNode.nodeValue).trim()}"
         fileData[uploadRef] = fileData[uploadRef] || [];
         entry.ref = this.genFileRef(file);
         entry.name = file.name || entry.ref;
+        entry.relative_path = file.webkitRelativePath;
         entry.type = file.type;
         entry.size = file.size;
         fileData[uploadRef].push(entry);
