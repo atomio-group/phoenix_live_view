@@ -569,7 +569,8 @@ export default class View {
   onJoinError(resp){
     if(resp.reason === "unauthorized" || resp.reason === "stale"){
       this.log("error", () => ["unauthorized live_redirect. Falling back to page request", resp])
-      return this.onRedirect({to: this.href})
+      if(this.isMain()){ this.onRedirect({to: this.href}) }
+      return
     }
     if(resp.redirect || resp.live_redirect){
       this.joinPending = false
